@@ -12,6 +12,15 @@
 - **Use Cases**: Area surveillance, perimeter monitoring, cooperative transportation
 - **Implementation Approach**: Extend behavior trees with formation switching logic; implement differential flatness controller for smooth transitions
 
+- **Draft Steps**:
+  1. Verify the AS2 launch flow for a multi-drone setup: per-drone `launch_as2.bash -n <namespace>` plus the ground-station launcher, and confirm the controller/estimator options needed for sim and real flights.
+  2. Model each formation as a swarm-relative offset list around a virtual centroid, using the documented Swarm Flocking behavior as the base primitive for formation control.
+  3. Define the formation set in the behavior-tree layer (`trees/*.xml`) so the mission can switch between line, V-shape, triangle, and grid without changing the mission entrypoint.
+  4. Add a formation-switching state in the mission logic that selects the desired relative offsets and updates the centroid target while preserving spacing constraints.
+  5. Use the differential flatness controller for smoother inter-formation transitions, and keep a PID fallback available for early tuning and debugging.
+  6. Test first in simulation with multiple namespaces, then validate GPS-denied behavior with the appropriate state-estimation source and record rosbag data for spacing and tracking analysis.
+  7. Tune the scaling rules, switching thresholds, and safety margins until the formation remains stable during centroid motion and abrupt shape changes.
+
 ### 2. **Collaborative Swarm Exploration & Mapping**
 - **Objective**: Autonomous exploration of unknown environments with distributed frontier-based exploration
 - **Key Features**:

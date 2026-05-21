@@ -1,2 +1,4 @@
 rosbags/*
 .vscode/*
+
+node_modules/*

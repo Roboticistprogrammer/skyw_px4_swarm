@@ -108,6 +108,7 @@ else
           -e DISPLAY=$DISPLAY \
           -e XAUTHORITY=$XAUTHORITY \
           -v ~/.Xauthority:/root/.Xauthority:ro \
+          -v /tmp/.X11-unix:/tmp/.X11-unix \
           --network host \
           px4-autopilot-gz:latest \
           tail -f /dev/null
