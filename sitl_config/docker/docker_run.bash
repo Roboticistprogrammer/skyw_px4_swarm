@@ -107,6 +107,8 @@ else
           --privileged \
           -e DISPLAY=$DISPLAY \
           -e XAUTHORITY=$XAUTHORITY \
+          -e LIBGL_ALWAYS_SOFTWARE=1 \
+          -e QT_X11_NO_MITSHM=1 \
           -v ~/.Xauthority:/root/.Xauthority:ro \
           -v /tmp/.X11-unix:/tmp/.X11-unix \
           --network host \
@@ -116,4 +118,9 @@ else
 fi
 
 echo "Attaching to the running container..."
-docker exec -it -e DISPLAY=$DISPLAY -e XAUTHORITY=$XAUTHORITY ${CONTAINER_NAME} /bin/bash -c "${full_command}; exec bash"
+docker exec -it \
+  -e DISPLAY=$DISPLAY \
+  -e XAUTHORITY=$XAUTHORITY \
+  -e LIBGL_ALWAYS_SOFTWARE=1 \
+  -e QT_X11_NO_MITSHM=1 \
+  ${CONTAINER_NAME} /bin/bash -c "${full_command}; exec bash"
